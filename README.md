@@ -20,6 +20,12 @@
 
 ![Architecture: the teacher's browser exchanges commands and state with the API, which goes through the MQTT broker to the agent on each headset; each headset sends back its state and, for casting, its screen and sound, relayed live to the browser; HMS installs the agent, and a browser bridge reads names and groups from it](docs/architecture.svg)
 
+<details><summary>French version</summary>
+
+![Architecture : le navigateur de l'enseignant échange commandes et état avec l'API, qui passe par le broker MQTT jusqu'à l'agent de chaque casque ; chaque casque renvoie son état et, pour le casting, son écran et son son, relayés en direct vers le navigateur ; HMS installe l'agent, et une passerelle navigateur en lit noms et groupes](docs/architecture.fr.svg)
+
+</details>
+
 ## Status
 
 - **Used** at IMT Mines Albi from September to October 2026: 17 headsets with the agent, out of 38 managed in HMS.
