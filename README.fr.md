@@ -1,53 +1,34 @@
 [English](README.md) · **Français**
 
-**Anthony Hunt** · [Fiche du projet sur ingevision.cloud](https://ingevision.cloud/?p=questfleet) · [LinkedIn](https://www.linkedin.com/in/anthony-hunt-3948a9196) · [Profil GitHub](https://github.com/anthohunt)
-
-> Dépôt vitrine : le code et les données de ce projet sont privés ; ce README le décrit.
-
 # QuestFleet
 
-Un agent Android installé sur chaque casque Meta Quest et un tableau de bord web pour piloter une flotte de casques en salle.
+**Un tableau de bord web et un agent sur chaque Meta Quest permettent à l'enseignant de voir, caster et piloter toute une salle de casques pendant un cours.**
 
-## Le problème
+[![Le vrai tableau de bord avec des casques de démo : trois casques castés en direct, l'un en grand, un message acquitté par chaque casque, puis une application lancée sur la sélection (cliquer pour la vidéo complète)](docs/demo.fr.gif)](https://drive.google.com/file/d/1qm_Ck3pZvEZFgkB2QJicxVAHOvuQ91IG/view)
 
-Dans une école d'ingénieurs, une salle de réalité virtuelle compte des dizaines de casques. La console de Meta (Horizon Managed Services, HMS) gère les comptes et installe les applications, mais elle ne permet pas d'envoyer un message à un casque, de voir ce qu'il affiche ou de l'empêcher de se mettre en veille. QuestFleet complète HMS sans le remplacer. Il sert à l'enseignant ou à l'animateur qui conduit une séance.
+*Le vrai tableau de bord, piloté avec des casques de démo ; le casting rejoue une session enregistrée dans un casque. [Vidéo complète (0:59)](https://drive.google.com/file/d/1qm_Ck3pZvEZFgkB2QJicxVAHOvuQ91IG/view)*
 
-## Comment ça marche
+## Ce qu'on fait avec
 
-- HMS installe l'agent QuestFleet sur chaque casque, en mode critique.
-- L'agent se connecte au serveur en MQTT sur WebSocket sécurisé (port 443) et remonte son état : batterie, Wi-Fi, application en cours, version.
-- Le serveur garde la présence et l'historique des commandes (réussite, erreur, délai dépassé).
-- Le tableau de bord envoie des commandes à un casque ou à une sélection : message, lancement d'application, volume, réveil, casting.
-- Le casting passe par WebRTC, avec un relais TURN quand la connexion directe échoue.
-- Un connecteur lit la console HMS pour reprendre le nom et le groupe de chaque casque.
+- **Flotte.** Chaque casque avec son nom et son groupe dans la console de Meta (HMS) : en ligne ou injoignable, porté ou posé, batterie, version de l'agent, alertes.
+- **Casting.** Écran et son d'un ou plusieurs casques, micro du joueur, une vue en grand ; un mur de casting partagé par un lien révocable.
+- **Messages.** Texte affiché dans le casque par-dessus l'application VR en cours, messages pré-écrits, messages vocaux vers un ou tous les casques ; chaque casque acquitte.
+- **Applications et réglages.** Lancer une application sur la sélection, régler le volume, garder les casques éveillés avec rallumage automatique de l'écran, faire sonner un casque pour le retrouver, faire vibrer ses manettes quand il est porté.
+- **Mises à jour de l'agent.** HMS installe l'agent ; un casque en retard sur la version publiée se met à jour dès qu'il se signale.
 
-## Ce qui est construit
+## Architecture
 
-En service. Agent en version 1.0.44.
+![Architecture : le navigateur de l'enseignant envoie les commandes à l'API, qui passe par le broker MQTT jusqu'à l'agent de chaque casque ; chaque casque renvoie son état et, pour le casting, son écran et son son, relayés en direct vers le navigateur ; HMS installe l'agent et fournit noms et groupes](docs/architecture.fr.svg)
 
-- Messages affichés dans l'accueil Meta et au-dessus d'une application VR qui continue de tourner ; messages pré-écrits partagés.
-- Casting de l'écran et du son d'un casque, micro du joueur, mur de casting partageable par lien révocable.
-- Message vocal vers un ou tous les casques.
-- Lancement d'application à distance.
-- Faire sonner un casque pour le retrouver.
-- Mode « toujours éveillé » avec rallumage automatique de l'écran.
-- Détection « porté / posé » à partir du gyroscope du casque.
-- Vibration des manettes, casque porté seulement.
-- Mise à jour de l'agent à distance, silencieuse quand l'agent est son propre installateur, sinon par HMS.
-- Import des noms et groupes de 38 casques depuis HMS.
+## État
 
-Limite constatée : un casque en veille profonde ou éteint ne peut pas être rallumé à distance. Aucune console de gestion de flotte ne le permet.
+- **Utilisé** dans la salle VR d'IMT Mines Albi de septembre à octobre 2026 : 17 casques avec l'agent, sur 38 dans HMS ; agent 1.0.46.
+- **Depuis le 6 novembre 2026**, le serveur tourne sur le serveur de l'école, joignable seulement depuis son réseau. Les casques n'y sont pas encore reliés (mise à jour de l'agent à venir), et le casting y demande un relais TURN.
+- **Limite connue.** Un casque en veille profonde ou éteint ne peut pas être réveillé à distance.
+- **Technologies.** Agent Android en Java (OpenXR pour les manettes), FastAPI, SQLite, Mosquitto (MQTT sur WebSocket), WebRTC (aiortc, coturn), Docker, GridStack ; passerelle HMS en Node.js avec Playwright. Interface en français.
 
-## Ce qui est public
+---
 
-Cette vitrine est publique ; le tableau de bord demande un compte et le code reste privé.
+**Anthony Hunt** · [ingevision.cloud](https://ingevision.cloud/?p=questfleet) · [LinkedIn](https://www.linkedin.com/in/anthony-hunt-3948a9196) · [GitHub](https://github.com/anthohunt)
 
-## Pile technique
-
-- Agent Android en Java, activité native OpenXR pour les manettes
-- Serveur FastAPI, base SQLite, authentification JWT
-- Mosquitto (MQTT sur WebSocket)
-- WebRTC et coturn
-- Docker, Traefik
-- GridStack pour la grille du tableau de bord
-- Playwright pour le connecteur HMS
+Le code et les données de la flotte sont privés.

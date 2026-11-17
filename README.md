@@ -1,53 +1,34 @@
 **English** · [Français](README.fr.md)
 
-**Anthony Hunt** · [Project page on ingevision.cloud](https://ingevision.cloud/?lang=en&p=questfleet) · [LinkedIn](https://www.linkedin.com/in/anthony-hunt-3948a9196) · [GitHub profile](https://github.com/anthohunt)
-
-> Showcase repository: the code and data of this project are private; this README describes it.
-
 # QuestFleet
 
-An Android agent installed on each Meta Quest headset and a web dashboard to run a fleet of headsets in a room.
+**A web dashboard and an agent on each Meta Quest let a teacher see, cast and command a whole room of headsets during a class.**
 
-## The problem
+[![The real dashboard with demo headsets: three headsets cast live, one in large, a message acknowledged by each headset, then an app launched on the selection (click for the full video)](docs/demo.gif)](https://drive.google.com/file/d/1QW6jRf_f47qdaK_oXFmRfNSnW9uSUXTw/view)
 
-At an engineering school, a virtual reality room holds dozens of headsets. Meta's console (Horizon Managed Services, HMS) manages accounts and installs applications, but it cannot send a message to a headset, show what it displays, or keep it from going to sleep. QuestFleet complements HMS without replacing it. It is meant for the teacher or facilitator running a session.
+*The real dashboard, driven by demo headsets; the casting replays a recorded headset session. [Full video (0:59)](https://drive.google.com/file/d/1QW6jRf_f47qdaK_oXFmRfNSnW9uSUXTw/view)*
 
-## How it works
+## Using it
 
-- HMS installs the QuestFleet agent on each headset, in critical mode.
-- The agent connects to the server over MQTT on secure WebSocket (port 443) and reports its state: battery, Wi-Fi, current application, version.
-- The server keeps presence and the history of commands (success, error, timeout).
-- The dashboard sends commands to one headset or to a selection: message, application launch, volume, wake-up, casting.
-- Casting uses WebRTC, with a TURN relay when the direct connection fails.
-- A connector reads the HMS console to pick up each headset's name and group.
+- **Fleet.** Each headset with its name and group from Meta's console (HMS): online or unreachable, worn or set down, battery, agent version, alerts.
+- **Casting.** Screen and sound of one or several headsets, the player's microphone, one view in large; a casting wall shared through a revocable link.
+- **Messages.** Text shown in the headset over the running VR app, pre-written messages, voice messages to one or all headsets; each headset acknowledges.
+- **Apps and settings.** Launch an app on the selection, set the volume, keep headsets awake with automatic screen wake-up, ring a headset to find it, vibrate its controllers while it is worn.
+- **Agent updates.** HMS installs the agent; a headset behind the published version updates itself when it reports in.
 
-## What is built
+## Architecture
 
-In service. Agent at version 1.0.44.
+![Architecture: the teacher's browser sends commands to the API, which goes through the MQTT broker to the agent on each headset; each headset sends back its state and, for casting, its screen and sound, relayed live to the browser; HMS installs the agent and provides names and groups](docs/architecture.svg)
 
-- Messages shown in the Meta home screen and on top of a VR application that keeps running; shared pre-written messages.
-- Casting of a headset's screen and sound, player microphone, casting wall shareable through a revocable link.
-- Voice message to one or all headsets.
-- Remote application launch.
-- Ring a headset to find it.
-- "Always awake" mode with automatic screen wake-up.
-- "Worn / set down" detection from the headset's gyroscope.
-- Controller vibration, only while the headset is worn.
-- Remote agent update, silent when the agent is its own installer, otherwise through HMS.
-- Import of the names and groups of 38 headsets from HMS.
+## Status
 
-Observed limit: a headset in deep sleep or switched off cannot be woken remotely. No fleet management console can do it.
+- **Used** in the VR room of IMT Mines Albi from September to October 2026: 17 headsets with the agent, out of 38 in HMS; agent 1.0.46.
+- **Since 6 November 2026** the server runs on the school's server, reachable only on its network. The headsets are not reconnected yet (agent update to come), and casting needs a TURN relay there.
+- **Known limit.** A headset in deep sleep or switched off cannot be woken remotely.
+- **Stack.** Android agent in Java (OpenXR for the controllers), FastAPI, SQLite, Mosquitto (MQTT over WebSocket), WebRTC (aiortc, coturn), Docker, GridStack; HMS bridge in Node.js with Playwright. Interface in French.
 
-## What is public
+---
 
-This page is public; the dashboard requires an account and the code stays private.
+**Anthony Hunt** · [ingevision.cloud](https://ingevision.cloud/?lang=en&p=questfleet) · [LinkedIn](https://www.linkedin.com/in/anthony-hunt-3948a9196) · [GitHub](https://github.com/anthohunt)
 
-## Tech stack
-
-- Android agent in Java, native OpenXR activity for the controllers
-- FastAPI server, SQLite database, JWT authentication
-- Mosquitto (MQTT over WebSocket)
-- WebRTC and coturn
-- Docker, Traefik
-- GridStack for the dashboard grid
-- Playwright for the HMS connector
+The code and the fleet's data are private.
