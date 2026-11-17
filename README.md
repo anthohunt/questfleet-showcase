@@ -6,6 +6,12 @@
 
 [![The real dashboard with demo headsets: three headsets casting, one enlarged, a message acknowledged by each headset, then an app launched on the selection (click for the full video)](docs/demo.gif)](https://drive.google.com/file/d/1QW6jRf_f47qdaK_oXFmRfNSnW9uSUXTw/view)
 
+<details><summary>French version</summary>
+
+[![Le vrai tableau de bord avec des casques de démo : trois casques en casting, l'un en grand, un message acquitté par chaque casque, puis une application lancée sur la sélection (cliquer pour la vidéo complète)](docs/demo.fr.gif)](https://drive.google.com/file/d/1qm_Ck3pZvEZFgkB2QJicxVAHOvuQ91IG/view)
+
+</details>
+
 *The real dashboard, driven by demo headsets; the casting replays a recorded headset session. [Full video (0:59)](https://drive.google.com/file/d/1QW6jRf_f47qdaK_oXFmRfNSnW9uSUXTw/view)*
 
 ## Using it
