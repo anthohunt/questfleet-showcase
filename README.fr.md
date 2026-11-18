@@ -4,15 +4,15 @@
 
 **Un tableau de bord web et un agent sur chaque Meta Quest permettent à l'enseignant de voir, caster et piloter toute une salle de casques pendant un cours.**
 
-[![Le vrai tableau de bord avec des casques de démo : trois casques en casting, l'un en grand, un message acquitté par chaque casque, puis une application lancée sur la sélection (version anglaise, cliquer pour la vidéo complète)](docs/demo.gif)](https://drive.google.com/file/d/1QW6jRf_f47qdaK_oXFmRfNSnW9uSUXTw/view)
+![Le vrai tableau de bord avec des casques de démo : trois casques en casting, l'un en grand, un message acquitté par chaque casque, puis une application lancée sur la sélection (version anglaise)](docs/demo.gif)
 
 <details><summary>Version française</summary>
 
-[![Le vrai tableau de bord avec des casques de démo : trois casques en casting, l'un en grand, un message acquitté par chaque casque, puis une application lancée sur la sélection (cliquer pour la vidéo complète)](docs/demo.fr.gif)](https://drive.google.com/file/d/1qm_Ck3pZvEZFgkB2QJicxVAHOvuQ91IG/view)
+![Le vrai tableau de bord avec des casques de démo : trois casques en casting, l'un en grand, un message acquitté par chaque casque, puis une application lancée sur la sélection](docs/demo.fr.gif)
 
 </details>
 
-*Le vrai tableau de bord, piloté avec des casques de démo ; le casting rejoue une session enregistrée dans un casque. [Vidéo complète (0:59)](https://drive.google.com/file/d/1qm_Ck3pZvEZFgkB2QJicxVAHOvuQ91IG/view)*
+*Le vrai tableau de bord, piloté avec des casques de démo ; le casting rejoue une session enregistrée dans un casque.*
 
 ## Utilisation
 
